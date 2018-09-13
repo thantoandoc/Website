@@ -1,14 +1,19 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 3000;
+
 var controllers = require('./routers');
+
+
 var app = express();
 //set morgan to log
 app.use(logger('dev'));
 //set middle_ware 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false}));
+app.use(cookieParser());
 
 //set view engine
 app.set('/views',express.static(__dirname + '/views'));
