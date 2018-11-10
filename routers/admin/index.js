@@ -1,40 +1,32 @@
 const express = require("express");
+const passport = require('passport');
 var router = express.Router();
 
-// const firebase = require("firebase-admin");
-// var serviceAccount = require("./serviceAccountKey.json");
-// firebase.initializeApp({
-//   credential: firebase.credential.cert(serviceAccount),
-//   databaseURL: "https://yummy-application.firebaseio.com"
-// });
-const firebase = require("../../config/firebaseConfig");
+
+const helper = require('./helper');
+
+function isAuth(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect('/login');
+}
 
 router
   .route("/")
-  .get((req, res) => {
-    if(!req.cookies.accessToken) {
-        res.redirect("/dashboard");
-    } else {
-        res.render("index");
-    }
-  })
-  .post((req, res) => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(req.body.email, req.body.password)
-      .then(data => {
-        req.cookies.accessToken = data.user.qa;
-        res.redirect("/dashboard");
-      })
-      .catch(err => res.json(err));
-  })
-  .delete()
-  .put();
+  .get(isAuth, (req, res) => {
+    res.redirect('/dashboard');
+  });
 router
   .route("/dashboard")
-  .get()
+  .get((req, res)=>{
+    res.render('dashboard');
+  })
   .post()
   .put()
   .delete();
+
+router
+  .route('/login')
+  .get(helper.requestLogin)
+  .post(passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/dashboard' }));
 
 module.exports = router;
