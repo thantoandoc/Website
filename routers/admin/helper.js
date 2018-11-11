@@ -1,7 +1,7 @@
-const firebase = require("../../config/firebaseConfig");
+
 
 requestLogin = (req, res) => {
-    res.render('index');
+    res.render('login');
 }
 handleLogin = (req, res, next) => {
     console.log(req.body);

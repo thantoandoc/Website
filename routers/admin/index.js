@@ -13,8 +13,9 @@ function isAuth(req, res, next) {
 router
   .route("/")
   .get(isAuth, (req, res) => {
-    res.redirect('/dashboard');
+    res.redirect('/login');
   });
+
 router
   .route("/dashboard")
   .get((req, res)=>{
@@ -29,4 +30,20 @@ router
   .get(helper.requestLogin)
   .post(passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/dashboard' }));
 
+router.route('/users')
+.get((req, res)=>{
+  res.render('user');
+});
+
+router.route('/tables').get((req, res)=>{
+  res.render('table');
+});
+
+router.route('/create_user').get((req, res)=>{
+  res.render('create_user');
+});
+
+router.route('/databases').get((req, res)=>{
+  res.render('database');
+})
 module.exports = router;
