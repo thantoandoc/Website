@@ -25,10 +25,10 @@ router
   .put()
   .delete();
 
-router
-  .route('/login')
-  .get(helper.requestLogin)
-  .post(passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/dashboard' }));
+// router
+//   .route('/login')
+//   .get(helper.requestLogin)
+//   .post(passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/dashboard' }));
 
 router.route('/users')
 .get((req, res)=>{
