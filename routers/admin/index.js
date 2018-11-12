@@ -13,7 +13,7 @@ function isAuth(req, res, next) {
 router
   .route("/")
   .get(isAuth, (req, res) => {
-    res.redirect('/login');
+    res.redirect('/dashboard');
   });
 
 router
@@ -45,5 +45,15 @@ router.route('/create_user').get((req, res)=>{
 
 router.route('/databases').get((req, res)=>{
   res.render('database');
-})
+});
+
+router.route('/add_food').get((req, res)=>{
+  res.render('add_food');
+});
+
+
+router.route('/bills').get((req, res)=>{
+  res.render('bills');
+});
+
 module.exports = router;
